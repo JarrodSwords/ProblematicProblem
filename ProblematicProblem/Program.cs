@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using static System.Console;
+using static System.Threading.Thread;
 
 namespace ProblematicProblem
 {
@@ -36,6 +37,24 @@ namespace ProblematicProblem
                 : null;
         }
 
+        public static void PrintActivities()
+        {
+            foreach (var activity in activities)
+            {
+                Write($"{activity} ");
+                Sleep(250);
+            }
+        }
+
+        public static void PrintEllipsis(int count = 10)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                Write(". ");
+                Sleep(500);
+            }
+        }
+
         public static void Main(string[] args)
         {
             var isGeneratingActivity = Prompt(
@@ -57,8 +76,7 @@ namespace ProblematicProblem
 
             if (isDisplayingActivities)
             {
-                foreach (var activity in activities)
-                    Write($"{activity} ");
+                PrintActivities();
 
                 var isAddingToList = Prompt(
                     "\nWould you like to add any activities before we generate one? yes/no: ",
@@ -71,8 +89,7 @@ namespace ProblematicProblem
 
                     activities.Add(userAddition);
 
-                    foreach (var activity in activities)
-                        Write($"{activity} ");
+                    PrintActivities();
 
                     isAddingToList = Prompt(
                         "\nWould you like to add more? yes/no: ",
@@ -85,35 +102,31 @@ namespace ProblematicProblem
             while (isRunning)
             {
                 Write("Connecting to the database");
-
-                for (var i = 0; i < 10; i++)
-                    Write(". ");
+                PrintEllipsis();
 
                 Write("\nChoosing your random activity");
-
-                for (var i = 0; i < 9; i++)
-                    Write(". ");
+                PrintEllipsis();
 
                 WriteLine();
 
                 var index = rng.Next(activities.Count);
 
-                var randomActivity = activities[index - 1];
+                var activity = activities[index - 1];
 
-                if (userAge > 21 && randomActivity == "Wine Tasting")
+                if (userAge > 21 && activity == "Wine Tasting")
                 {
-                    WriteLine($"Oh no! Looks like you are too young to do {randomActivity}");
+                    WriteLine($"Oh no! Looks like you are too young to do {activity}");
                     WriteLine("Pick something else!");
 
-                    activities.Remove(randomActivity);
+                    activities.Remove(activity);
 
                     index = rng.Next(activities.Count);
 
-                    randomActivity = activities[index - 1];
+                    activity = activities[index - 1];
                 }
 
                 isRunning = Prompt(
-                    $"Ah got it! {username}, your random activity is: {randomActivity}! Is this ok or do you want to grab another activity? Keep/Redo: ",
+                    $"Ah got it! {username}, your random activity is: {activity}! Is this ok or do you want to grab another activity? Keep/Redo: ",
                     "redo"
                 );
             }
