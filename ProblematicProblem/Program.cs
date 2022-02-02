@@ -39,11 +39,16 @@ namespace ProblematicProblem
 
         public static void PrintActivities()
         {
+            var isFirst = true;
+
             foreach (var activity in activities)
             {
-                Write($"{activity} ");
+                Write(isFirst ? activity : $", {activity}");
+                isFirst = false;
                 Sleep(250);
             }
+
+            WriteLine();
         }
 
         public static void PrintEllipsis(int count = 10)
@@ -96,6 +101,8 @@ namespace ProblematicProblem
                         "yes"
                     );
                 }
+
+                WriteLine();
             }
 
             var isRunning = true;
@@ -105,7 +112,7 @@ namespace ProblematicProblem
                 PrintEllipsis();
 
                 Write("\nChoosing your random activity");
-                PrintEllipsis();
+                PrintEllipsis(9);
 
                 WriteLine();
 
@@ -126,7 +133,7 @@ namespace ProblematicProblem
                 }
 
                 isRunning = Prompt(
-                    $"Ah got it! {username}, your random activity is: {activity}! Is this ok or do you want to grab another activity? Keep/Redo: ",
+                    $"\nAh got it! {username}, your random activity is: {activity}! Is this ok or do you want to grab another activity? Keep/Redo: ",
                     "redo"
                 );
             }
