@@ -11,7 +11,7 @@ namespace ProblematicProblem
             "Movies", "Paintball", "Bowling", "Lazer Tag", "LAN Party", "Hiking", "Axe Throwing", "Wine Tasting"
         };
 
-        private static Random rng;
+        private static readonly Random rng = new Random();
 
         #region Static Interface
 
@@ -96,9 +96,9 @@ namespace ProblematicProblem
 
                 WriteLine();
 
-                var randomNumber = rng.Next(activities.Count);
+                var index = rng.Next(activities.Count);
 
-                var randomActivity = activities[randomNumber];
+                var randomActivity = activities[index - 1];
 
                 if (userAge > 21 && randomActivity == "Wine Tasting")
                 {
@@ -107,9 +107,9 @@ namespace ProblematicProblem
 
                     activities.Remove(randomActivity);
 
-                    randomNumber = rng.Next(activities.Count);
+                    index = rng.Next(activities.Count);
 
-                    randomActivity = activities[randomNumber];
+                    randomActivity = activities[index - 1];
                 }
 
                 isRunning = Prompt(
